@@ -1,0 +1,9 @@
+numpy
+pytube
+moviepy
+faster_whisper
+pydub
+gtts
+deep_translator
+transformers 
+accelerate
