@@ -1,25 +1,33 @@
 import requests
 
-url = "https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
+CHUNK_SIZE = 1024
+url = "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM"
 
-payload = {
-    "model_id": "<string>",
-    "pronunciation_dictionary_locators": [
-        {
-            "pronunciation_dictionary_id": "<string>",
-            "version_id": "<string>"
-        }
-    ],
-    "text": "كما تعلم في الأيام الأخيرة يبدو أنك أصدرت تحذيرًا بأنه إذا لم يعاملوك في المحاكم وحتى المحكمة العليا الأمريكية بشكل عادل، فربما يكون هناك هرج ومرج في البلاد",
-    "voice_settings": {
-        "similarity_boost": 123,
-        "stability": 123,
-        "style": 123,
-        "use_speaker_boost": True
-    }
+headers = {
+  "Accept": "audio/mpeg",
+  "Content-Type": "application/json",
+  "xi-api-key": "e5814446d2d8efe8e7dadae095c6603c"
 }
-headers = {"Content-Type": "application/json"}
 
-response = requests.request("POST", url, json=payload, headers=headers)
+data = {
+  "text": '''انا اسمي احمداشتغل علي مشروع الدبلجه''',
+  "model_id": "eleven_monolingual_v1",  # Use a model that best fits the default voice
+  "voice_settings": {
+    "language": "arabic",  # Set the language
+    "stability": 0.5,  # Adjust stability
+    "similarity_boost": 0.1,  # Adjust similarity boost
+    "pitch": 0.0,  # Set pitch to default (normal)
+    "speed":0.0,  # Set speed to default (normal)
+    "volume": 1.0,  # Set volume to default (normal)
+    "breathiness": 0.0,  # Set breathiness to default (normal)
+    "articulation": 0.0,  # Set articulation to default (normal)
+    "emotional_tone": 0.0,  # Set emotional tone to default (neutral)
+    "glottal_tension": 0.0  # Set glottal tension to default (normal)
+  }
+}
 
-print(response.text)
+response = requests.post(url, json=data, headers=headers)
+with open('Tested audio T-T-S/output_arabic.mp3', 'wb') as f:
+    for chunk in response.iter_content(chunk_size=CHUNK_SIZE):
+        if chunk:
+            f.write(chunk)
