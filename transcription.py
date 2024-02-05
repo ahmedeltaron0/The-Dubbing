@@ -25,6 +25,6 @@ def transc(audio):
     #return transcriptions_time
 
 if __name__ == "__main__":
-    audio_data = r"E:\Lip Sync\output_audio\audio.mp3"
+    audio_data = r"output_audio/audio.mp3"
     transcription_result = transc(audio_data)
     print(transcription_result)
